@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection de Livres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --accent: #00d9ff;
+            --background: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text: #e0e0e0;
+            --text-light: #a0a0a0;
+            --border: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .background-pattern::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            letter-spacing: -3px;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 5px;
+            background: var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-top: 25px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out backwards;
+            border: 1px solid var(--border);
+        }
+
+        .book-card:nth-child(1) { animation-delay: 0.1s; }
+        .book-card:nth-child(2) { animation-delay: 0.2s; }
+        .book-card:nth-child(3) { animation-delay: 0.3s; }
+        .book-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .book-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .book-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.2), 0 0 60px rgba(0, 217, 255, 0.1);
+            border-color: var(--accent);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+
+        .book-card:nth-child(1) .book-cover { background: linear-gradient(135deg, #00d9ff 0%, #7b2ff7 100%); }
+        .book-card:nth-child(2) .book-cover { background: linear-gradient(135deg, #f72585 0%, #7209b7 100%); }
+        .book-card:nth-child(3) .book-cover { background: linear-gradient(135deg, #06ffa5 0%, #00d9ff 100%); }
+        .book-card:nth-child(4) .book-cover { background: linear-gradient(135deg, #ffd60a 0%, #ff006e 100%); }
+
+        .book-content {
+            padding: 30px;
+        }
+
+        .book-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .book-author {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .book-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-item {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            background: rgba(0, 217, 255, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .meta-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 100px;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        /* Short Stories Section */
+        .short-stories-section {
+            margin-top: 120px;
+            animation: fadeInUp 0.8s ease-out 0.5s backwards;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        .section-line {
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 0 auto;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-card {
+            background: var(--card-bg);
+            padding: 35px 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .story-card:nth-child(1) { animation-delay: 0.6s; }
+        .story-card:nth-child(2) { animation-delay: 0.7s; }
+        .story-card:nth-child(3) { animation-delay: 0.8s; }
+        .story-card:nth-child(4) { animation-delay: 0.9s; }
+
+        .story-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.3);
+            border-left-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .story-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .story-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .story-publication {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .story-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 15px;
+            }
+
+            header {
+                margin-bottom: 50px;
+            }
+
+            .books-grid {
+                gap: 30px;
+                grid-template-columns: 1fr;
+            }
+
+            .book-cover {
+                height: 300px;
+            }
+
+            .short-stories-section {
+                margin-top: 80px;
+            }
+
+            .section-header {
+                margin-bottom: 40px;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Olivier Quéméré</h1>
+            <p class="subtitle">Œuvres Choisies</p>
+        </header>
+
+        <div class="books-grid">
+            <article class="book-card">
+                <div class="book-cover">
+                    Au Bistrot
+                </div>
+                <div class="book-content">
+                    <h2 class="book-title">Au Bistrot</h2>
+                    <p class="book-author">Olivier Quéméré</p>
+                    <p class="book-description">
+                        Premier livre de l'auteur qui conte deux soirées au café, un univers relationnel dur et tendre à la fois. 
+                        Une plongée intimiste dans les moments de vie ordinaires qui révèle la sensibilité particulière de Quéméré.
+                    </p>
+                    <div class="book-meta">
+                        <span class="meta-item">📅 1999</span>
+                        <span class="meta-item">📖 Bande dessinée</span>
+                        <span class="meta-item">🏢 Pyramides</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="book-card">
+                <div class="book-cover">
+                    Fin de Journée
+                </div>
+                <div class="book-content">
+                    <h2 class="book-title">Fin de Journée</h2>
+                    <p class="book-author">Olivier Quéméré</p>
+                    <p class="book-description">
+                        Une œuvre qui révèle un auteur d'une sensibilité et d'une poésie rares. 
+                        Quéméré y déploie son talent pour capturer les moments éphémères et les émotions subtiles du quotidien avec une finesse remarquable.
+                    </p>
+                    <div class="book-meta">
+                        <span class="meta-item">📅 2001</span>
+                        <span class="meta-item">📖 Bande dessinée</span>
+                        <span class="meta-item">🏢 La 5e Couche</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="book-card">
+                <div class="book-cover">
+                    A Freud ! Sales et Méchants
+                </div>
+                <div class="book-content">
+                    <h2 class="book-title">A Freud ! Sales et Méchants</h2>
+                    <p class="book-author">Olivier Quéméré</p>
+                    <p class="book-description">
+                        Tome 10 de la série culte "Le Poulpe", cette contribution d'Olivier Quéméré mêle l'univers du polar 
+                        avec son style graphique singulier et son approche narrative intimiste.
+                    </p>
+                    <div class="book-meta">
+                        <span class="meta-item">📅 2002</span>
+                        <span class="meta-item">📖 Bande dessinée</span>
+                        <span class="meta-item">🏢 6 Pieds sous Terre</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="book-card">
+                <div class="book-cover">
+                    Miroirs Sélectifs
+                </div>
+                <div class="book-content">
+                    <h2 class="book-title">Miroirs Sélectifs</h2>
+                    <p class="book-author">Olivier Quéméré</p>
+                    <p class="book-description">
+                        Édition limitée publiée par Le Franc-tireur, cette œuvre rare témoigne de la continuité 
+                        du travail d'Olivier Quéméré et de son exploration des thèmes intimistes qui caractérisent son univers artistique.
+                    </p>
+                    <div class="book-meta">
+                        <span class="meta-item">📅 2009</span>
+                        <span class="meta-item">📖 Tirage limité</span>
+                        <span class="meta-item">🏢 Le Franc-tireur</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <section class="short-stories-section">
+            <div class="section-header">
+                <h2 class="section-title">Histoires Courtes</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="story-icon">📰</div>
+                    <h3 class="story-title">Bruxelles année O</h3>
+                    <p class="story-publication">Frigobox - Échangeur narratif</p>
+                    <p class="story-description">Contribution au projet collectif sur Bruxelles, publiée dans cette revue belge innovante.</p>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-icon">✍️</div>
+                    <h3 class="story-title">Self service</h3>
+                    <p class="story-publication">Fréon éditions</p>
+                    <p class="story-description">Une histoire courte éditée par Fréon, l'atelier où Quéméré a été intérimaire.</p>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-icon">🖋️</div>
+                    <h3 class="story-title">S. et Moi</h3>
+                    <p class="story-publication">Revue Bile Noire</p>
+                    <p class="story-description">Publiée dans cette revue suisse, une narration intimiste caractéristique du style de l'auteur.</p>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-icon">☀️</div>
+                    <h3 class="story-title">Moments d'été</h3>
+                    <p class="story-publication">Hebdo Zurban</p>
+                    <p class="story-description">Une histoire courte capturant l'essence des instants estivaux, publiée dans l'hebdomadaire Zurban.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 - Olivier Quéméré - Œuvres Choisies</p>
+        </footer>
+    </div>
+</body>
+</html>
