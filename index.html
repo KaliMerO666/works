@@ -9,12 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ffffff;
-            --accent: #00d9ff;
+            --primary: #00ff9f;
+            --accent: #ff006e;
+            --secondary: #39ff14;
+            --pink-glow: #ff1493;
             --background: #0a0a0a;
             --card-bg: #1a1a1a;
-            --text: #e0e0e0;
-            --text-light: #a0a0a0;
+            --text: #00ff9f;
+            --text-light: #9d9d9d;
             --border: #2a2a2a;
         }
 
@@ -38,10 +40,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.02;
+            opacity: 0.03;
             background-image: 
-                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 159, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(57, 255, 20, 0.08) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -54,7 +57,7 @@
             width: 100%;
             height: 100%;
             background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 159, 0.02) 2px, rgba(0, 255, 159, 0.02) 4px);
         }
 
         .container {
@@ -146,8 +149,8 @@
 
         .book-card:hover {
             transform: translateY(-12px);
-            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.2), 0 0 60px rgba(0, 217, 255, 0.1);
-            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 255, 159, 0.2), 0 0 60px rgba(255, 0, 110, 0.15);
+            border-color: var(--primary);
         }
 
         .book-cover {
@@ -225,16 +228,16 @@
         .meta-item {
             font-size: 0.8rem;
             color: var(--text-light);
-            background: rgba(0, 217, 255, 0.1);
+            background: rgba(0, 255, 159, 0.08);
             padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(0, 217, 255, 0.2);
+            border: 1px solid rgba(0, 255, 159, 0.2);
             font-family: 'JetBrains Mono', monospace;
             transition: all 0.3s ease;
         }
 
         .meta-item:hover {
-            background: rgba(0, 217, 255, 0.2);
+            background: rgba(255, 0, 110, 0.15);
             border-color: var(--accent);
             color: var(--accent);
         }
@@ -303,7 +306,7 @@
 
         .story-card:hover {
             transform: translateX(8px);
-            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(255, 0, 110, 0.3);
             border-left-color: var(--accent);
             border-color: var(--accent);
         }
@@ -408,14 +411,14 @@
     
     <div class="container">
         <header>
-            <h1>Olivier Quéméré</h1>
+            <h1>Olivier "Kalimero" Quéméré</h1>
             <p class="subtitle">Œuvres Choisies</p>
         </header>
 
         <div class="books-grid">
             <article class="book-card">
-                <div class="book-cover">
-                    Au Bistrot
+                <div class="book-cover" style="background: none; padding: 0;">
+                    <img src="au-bistrot.webp" alt="Au Bistrot - Olivier Quéméré" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="book-content">
                     <h2 class="book-title">Au Bistrot</h2>
@@ -433,8 +436,8 @@
             </article>
 
             <article class="book-card">
-                <div class="book-cover">
-                    Fin de Journée
+                <div class="book-cover" style="background: none; padding: 0;">
+                    <img src="fin-de-journee.jpg" alt="Fin de Journée - Olivier Quéméré" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="book-content">
                     <h2 class="book-title">Fin de Journée</h2>
@@ -452,8 +455,8 @@
             </article>
 
             <article class="book-card">
-                <div class="book-cover">
-                    A Freud ! Sales et Méchants
+                <div class="book-cover" style="background: none; padding: 0;">
+                    <img src="a-freud-sales-mechants.jpg" alt="A Freud ! Sales et Méchants - Olivier Quéméré" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="book-content">
                     <h2 class="book-title">A Freud ! Sales et Méchants</h2>
@@ -471,8 +474,8 @@
             </article>
 
             <article class="book-card">
-                <div class="book-cover">
-                    Miroirs Sélectifs
+                <div class="book-cover" style="background: none; padding: 0;">
+                    <img src="miroirs-selectifs.jpg" alt="Miroirs Sélectifs - Olivier Quéméré" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="book-content">
                     <h2 class="book-title">Miroirs Sélectifs</h2>
