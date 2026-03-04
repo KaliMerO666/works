@@ -341,6 +341,47 @@
             line-height: 1.6;
         }
 
+        .order-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 159, 0.3);
+            border: 2px solid var(--primary);
+        }
+
+        .order-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 159, 0.5);
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .sold-out-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--accent);
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -432,6 +473,7 @@
                         <span class="meta-item">📖 Bande dessinée</span>
                         <span class="meta-item">🏢 Pyramides</span>
                     </div>
+                    <a href="https://ko-fi.com/s/8a2b53b4ab" target="_blank" class="order-button">Commander</a>
                 </div>
             </article>
 
@@ -451,6 +493,7 @@
                         <span class="meta-item">📖 Bande dessinée</span>
                         <span class="meta-item">🏢 La 5e Couche</span>
                     </div>
+                    <span class="sold-out-button">Épuisé</span>
                 </div>
             </article>
 
@@ -470,6 +513,7 @@
                         <span class="meta-item">📖 Bande dessinée</span>
                         <span class="meta-item">🏢 6 Pieds sous Terre</span>
                     </div>
+                    <a href="https://amzn.eu/d/0g6nEm72" target="_blank" class="order-button">Commander</a>
                 </div>
             </article>
 
@@ -489,6 +533,7 @@
                         <span class="meta-item">📖 Tirage limité</span>
                         <span class="meta-item">🏢 Le Franc-tireur</span>
                     </div>
+                    <span class="sold-out-button">Épuisé</span>
                 </div>
             </article>
         </div>
@@ -526,13 +571,4 @@
                     <h3 class="story-title">Moments d'été</h3>
                     <p class="story-publication">Hebdo Zurban</p>
                     <p class="story-description">Une histoire courte capturant l'essence des instants estivaux, publiée dans l'hebdomadaire Zurban.</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2025 - Olivier Quéméré - Œuvres Choisies</p>
-        </footer>
-    </div>
-</body>
-</html>
+     
